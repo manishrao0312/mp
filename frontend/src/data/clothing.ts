@@ -55,6 +55,34 @@ export const clothingItems: ClothingItem[] = [
     id: "11",
     name:'striper shirt',
     src:"/clothes/stripesblack.jpg",
+  },
+  {
+    id:"12",
+    name:"Blue Shirt",
+    src:"/clothes/blueeee.jpg"
+  },
+  {
+    id:"13",
+    name:"Creamish Shirt",
+    src:"/clothes/creamish.jpg"
+  },
+  {
+    id:"14",
+    name:"red shirt",
+    src:"/clothes/redfull.jpg"
+  },
+  {
+    id:"15",
+    name:"pink dress",
+    src:"/clothes/womencloth1.jpg"
+  },{
+    id:"16",  
+    name:"Half Saree",
+    src:"/clothes/waglesaree.jpg"
+  },{
+    id:"17",
+    name:"Traditional Creamish  Dress",
+    src:"/clothes/creamsaree.jpg"
   }
 ];
 

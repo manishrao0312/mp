@@ -1,0 +1,9 @@
+fastapi==0.123.8
+uvicorn==0.38.0
+pillow==12.0.0
+numpy==2.2.6
+python-dotenv==1.2.1
+opencv-python-headless==4.12.0.88
+ultralytics==8.3.235
+google-genai==1.53.0
+python-multipart==0.0.9

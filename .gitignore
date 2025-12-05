@@ -1,0 +1,18 @@
+# --- Python ---
+backend/.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Node ---
+frontend/node_modules/
+frontend/dist/
+
+# --- Environment variables ---
+.env
+
+# --- OS / IDE / Logs ---
+.DS_Store
+.vscode/
+*.log

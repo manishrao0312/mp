@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500&display=swap');
+
+@theme {
+  --font-sans: "Outfit", sans-serif;
+  --color-bg-dark: #05010a; /* Almost black for better contrast */
+}
+
+body {
+  background-color: var(--color-bg-dark);
+  font-family: var(--font-sans);
+  margin: 0;
+  overflow: hidden;
+}
+
+@layer utilities {
+  /* 1. ELEGANT STROKE: Standardized to 0.5px for ALL text */
+  .text-outline {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.85);
+    color: transparent;
+    transition: all 0.5s ease;
+  }
+  
+  /* Hover effect: Fills the text slightly when you hover */
+  .text-outline:hover {
+    color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* 2. ATMOSPHERE: A purple spotlight behind the model */
+  .bg-glow {
+    background: radial-gradient(circle at 50% 50%, rgba(110, 30, 200, 0.35) 0%, rgba(5, 1, 10, 0) 65%);
+  }
+
+  /* 3. GLASS EFFECT: For buttons/panels */
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}

@@ -41,7 +41,7 @@ if not api_key:
 # Use the correct variable 'api_key' here
 gemini_client = genai.Client(api_key=api_key)
 
-yolo_model = YOLO("yolov8m.pt")
+yolo_model = YOLO("yolov8n.pt")
 
 # ======================================================
 # FastAPI app setup

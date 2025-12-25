@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# --- Security (CRITICAL) ---
+.env
+.env.local
+
+# --- Python Backend ---
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/

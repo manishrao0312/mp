@@ -22,20 +22,24 @@ import traceback
 # ======================================================
 # Environment setup
 # ======================================================
-load_dotenv()
+# ======================================================
+# Environment setup
+# ======================================================
+load_dotenv(override=True) # Force reload of .env
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# Read the new key
+api_key = os.getenv("MY_FRESH_KEY") 
 GEMINI_IMAGE_MODEL = os.getenv("GEMINI_IMAGE_MODEL", "gemini-2.0-flash-exp") 
-# Note: Ensure you use a model version capable of image editing/generation if available, 
-# or the standard multimodal model.
 
-if not GEMINI_API_KEY:
-    raise RuntimeError("GEMINI_API_KEY not found in .env")
+# Check if the key exists
+if not api_key:
+    raise RuntimeError("MY_FRESH_KEY not found in .env file. Please add it.")
 
 # ======================================================
 # Initialize models
 # ======================================================
-gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+# Use the correct variable 'api_key' here
+gemini_client = genai.Client(api_key=api_key)
 
 yolo_model = YOLO("yolov8m.pt")
 
@@ -241,6 +245,15 @@ def generate_tryon_image(person_bytes, clothing_bytes, size, gender, idx):
 # ======================================================
 # Main Endpoint (UPDATED)
 # ======================================================
+# Add this helper function at the top with your other helpers
+def detect_actual_gender(img: Image.Image) -> str:
+    """Uses Gemini to identify the actual gender of the person in the photo."""
+    prompt = "Look at the person in this image. Is the person Male or Female? Respond with only the word 'Male' or 'Female'."
+    response = gemini_client.models.generate_content(
+        model=GEMINI_IMAGE_MODEL,
+        contents=[prompt, img]
+    )
+    return response.text.strip().capitalize()
 @app.post("/api/swap-clothing", response_model=TryOnResponse)
 async def swap_clothing(
     person_image: UploadFile = File(...),
@@ -276,6 +289,22 @@ async def swap_clothing(
     clothing_bytes_list = [await c.read() for c in clothing_images]
 
     person_img = Image.open(io.BytesIO(person_bytes))
+
+    # --- NEW GENDER GUARDRAIL BLOCK ---
+    logs.append("🔍 Analyzing person's identity...")
+    actual_detected_gender = detect_actual_gender(person_img)
+    
+    # Logic: Block if Male selects 'Female' (or vice versa), unless 'Unisex' is used
+    if gender != "Unisex" and actual_detected_gender != gender:
+        logs.append(f"❌ Safety Block: Photo is {actual_detected_gender}, but selection was {gender}.")
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Safety Block: The photo appears to be {actual_detected_gender}, but you selected {gender} clothing. Incompatible items cannot be added."
+        )
+    
+    logs.append(f"✅ Identity confirmed as {actual_detected_gender}. Proceeding with try-on...")
+    # --- END GENDER GUARDRAIL ---
+
     validate_person_image(person_img)
     logs.append("Person image validated.")
 
@@ -322,8 +351,6 @@ async def swap_clothing(
         logs.append(f"Recommendation error: {str(e)}")
 
     return TryOnResponse(success=True, size=size, gender=gender, results=results, logs=logs)
-
-
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc: HTTPException):
     return JSONResponse(status_code=exc.status_code, content={"success": False, "detail": exc.detail})

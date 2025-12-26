@@ -161,7 +161,7 @@ const TryOn = () => {
       // Mock delay for visual effect if testing without backend, remove setTimeout in real logic
       // await new Promise(r => setTimeout(r, 2000)); 
 
-      const response = await fetch("http://127.0.0.1:8000/api/swap-clothing", {
+      const response = await fetch("https://mp-2-lg8d.onrender.com/api/swap-clothing", {
         method: "POST",
         body: formData,
       });

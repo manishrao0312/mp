@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Import your two pages
 import Home from './Home';
-import TryOn from './tryon';
+import TryOn from './Tryon';
 
 const App = () => {
   return (

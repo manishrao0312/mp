@@ -46,7 +46,7 @@ yolo_model = YOLO("yolov8n.pt")
 # ======================================================
 # FastAPI app setup
 # ======================================================
-app = FastAPI(title="Virtual Clothing Try-On")
+app = FastAPI(title="Virtuval Clothing Try-On")
 
 origins = [
     "http://localhost:8080",

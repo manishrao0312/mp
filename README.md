@@ -5,6 +5,7 @@ Upload your photo, pick clothing, and let generative AI place the outfit on you 
 Built with a FastAPI backend, React + Tailwind frontend, YOLOv8 for person/clothing validation, and Gemini 2.0 Flash for image generation and style analysis.
 
 ---
+<img width="1910" height="1199" alt="image" src="https://github.com/user-attachments/assets/2c98977b-60d6-45cf-87d5-0cbad313a8fd" />
 
 ## Architecture
 
